@@ -65,7 +65,7 @@ function organizeFn(srcDir) {
         category = identifyCategory(content);
         filePath = path.join(srcDir, content);
         categoryPath = path.join(organizedDir, category);
-        copyToCategory(filePath, categoryPath);
+        moveToCategory(filePath, categoryPath);
       }
     });
   } else {
@@ -89,12 +89,13 @@ function identifyCategory(file) {
   return "others";
 }
 
-function copyToCategory(currfilePath, categoryPath) {
+function moveToCategory(currfilePath, categoryPath) {
   if (!fs.existsSync(categoryPath)) fs.mkdirSync(categoryPath);
 
   let destFilePath = path.join(categoryPath, path.basename(currfilePath));
   fs.copyFileSync(currfilePath, destFilePath);
   fs.unlinkSync(currfilePath);
+  console.log(`moved ${path.basename(currfilePath)}`);
 }
 
 // TODO
