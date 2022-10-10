@@ -1,5 +1,7 @@
-const fs = require("fs");
-const path = require("path");
+#!/usr/bin/env node
+const helpObj = require('./commands/help');
+const treeObj = require('./commands/tree');
+const organizeObj = require('./commands/organize');
 
 let inputArr = process.argv.slice(2);
 let command = inputArr[0];
@@ -27,76 +29,14 @@ const categories = {
 
 switch (command) {
   case "tree":
-    treeFn(inputArr[1]);
+    treeObj.treeKey(inputArr[1], "");
     break;
   case "organize":
-    organizeFn(inputArr[1]);
+    organizeObj.organizeKey(inputArr[1]);
     break;
   case "help":
-    helpFn();
+    helpObj.helpKey();
     break;
   default:
     console.log("please input a valid command");
 }
-
-function helpFn() {
-  console.log(`
-list of all commands:
-- node main.js tree 'directoryPath'
-- node main.js organize 'direcotryPath'
-- node main.js help`);
-}
-
-function organizeFn(srcDir) {
-  let pathExists = fs.existsSync(srcDir);
-  let isDir = !path.extname(path.basename(srcDir));
-
-  if (srcDir && pathExists && isDir) {
-    organizedDir = path.join(srcDir, "organized");
-    if (!fs.existsSync(organizedDir)) fs.mkdirSync(organizedDir);
-
-    let srcDirContent = fs.readdirSync(srcDir);
-    let category;
-    let filePath;
-    let categoryPath;
-
-    srcDirContent.forEach((content) => {
-      if (fs.lstatSync(path.join(srcDir, content)).isFile()) {
-        category = identifyCategory(content);
-        filePath = path.join(srcDir, content);
-        categoryPath = path.join(organizedDir, category);
-        moveToCategory(filePath, categoryPath);
-      }
-    });
-  } else {
-    console.log("enter valid path");
-    return;
-  }
-}
-
-function identifyCategory(file) {
-  let fileExtn = path.extname(file);
-
-  for (let category in categories) {
-    let extnArr = categories[category];
-
-    for (let i = 0; i < extnArr.length; i++) {
-      if (fileExtn === extnArr[i]) {
-        return category;
-      }
-    }
-  }
-  return "others";
-}
-
-function moveToCategory(currfilePath, categoryPath) {
-  if (!fs.existsSync(categoryPath)) fs.mkdirSync(categoryPath);
-
-  let destFilePath = path.join(categoryPath, path.basename(currfilePath));
-  fs.copyFileSync(currfilePath, destFilePath);
-  fs.unlinkSync(currfilePath);
-  console.log(`moved ${path.basename(currfilePath)}`);
-}
-
-// TODO
-function treeFn(dirPath) {}

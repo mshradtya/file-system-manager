@@ -1,0 +1,26 @@
+{
+  "name": "file-system-organizer",
+  "version": "1.0.0",
+  "description": "A node.js script to group files in separate directories (code, media, documents etc.) based on their extension",
+  "main": "main.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mshradtya/file-system-organizer.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mshradtya/file-system-organizer/issues"
+  },
+  "homepage": "https://github.com/mshradtya/file-system-organizer#readme",
+  "bin": {
+    "fso":"main.js"
+  }
+}
