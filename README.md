@@ -1,2 +1,5 @@
 # file-system-organizer
-A node.js script to group files in separate directories (code, media, documents etc.) based on their extension
+Available commands:
+1. help -> to view available command
+2. organize -> organize directory files based on extension
+3. tree -> view directory contents in tree format
